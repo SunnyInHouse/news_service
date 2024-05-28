@@ -1,0 +1,39 @@
+volumes:
+  pg_data:
+  pg_admin:
+
+networks:
+  news_and_authorization_service:
+    driver: bridge
+
+services:
+  db:
+    container_name: postgres-news-service
+    image: postgres:16.3-alpine
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    env_file:
+      - ../news_and_authorization_service/.env 
+    networks:
+      - news_and_authorization_service
+    restart: on-failure
+
+  pgadmin:
+    container_name: pgadmin-news-service
+    image: dpage/pgadmin4
+    env_file: ../news_and_authorization_service/.env 
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_LISTEN_PORT: 80
+      PGADMIN_DISABLE_POSTFIX: 'True'
+    volumes:
+       - pg_admin:/var/lib/pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - news_and_authorization_service
+    restart: on-failure
