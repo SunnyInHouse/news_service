@@ -7,7 +7,7 @@ from comments.constants import FIELD_LIMITS_COMMENTS_APP
 from news.models import News
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     """Model Comments."""
 
     date_created_at = models.DateTimeField(

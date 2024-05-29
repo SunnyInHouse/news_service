@@ -3,10 +3,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
-from users.models import Users
+from users.models import User
 
 
-@admin.register(Users)
+@admin.register(User)
 class UsersAdmin(DjangoUserAdmin):
     """Settings for presenting 'User' model on the admin site."""
 

@@ -2,10 +2,10 @@
 
 from django.contrib import admin
 
-from comments.models import Comments
+from comments.models import Comment
 
 
-@admin.register(Comments)
+@admin.register(Comment)
 class CommentsAdmin(admin.ModelAdmin):
     """Settings for presenting 'News' model on the admin site."""
 
