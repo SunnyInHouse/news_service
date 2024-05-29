@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "news.apps.NewsConfig",
     "comments.apps.CommentsConfig",
+    "likes.apps.LikesConfig",
 ]
 
 MIDDLEWARE = [
