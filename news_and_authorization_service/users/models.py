@@ -9,7 +9,7 @@ from users.manager import UserManager
 from users.validators import validate_username_not_me
 
 
-class Users(AbstractUser):
+class User(AbstractUser):
     """Modified model User."""
 
     username = models.CharField(
