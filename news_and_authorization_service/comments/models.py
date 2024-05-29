@@ -1,0 +1,53 @@
+"""Database settings of the 'Comments' application."""
+
+from django.conf import settings
+from django.db import models
+
+from comments.constants import FIELD_LIMITS_COMMENTS_APP
+from news.models import News
+
+
+class Comments(models.Model):
+    """Model Comments."""
+
+    date_created_at = models.DateTimeField(
+        "comments date created at",
+        help_text="Date the comments was created",
+        auto_now_add=True,
+    )
+    text = models.CharField(
+        "news text",
+        help_text="Text of the news",
+        max_length=FIELD_LIMITS_COMMENTS_APP["text_max_char"],
+    )
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name="news author",
+        help_text="Author of the news",
+        on_delete=models.CASCADE,
+        related_name="comments_author",
+    )
+    news = models.ForeignKey(
+        News,
+        verbose_name="comment for news",
+        help_text="Comment for this news",
+        on_delete=models.CASCADE,
+        related_name="comments_news",
+    )
+
+    class Meta:
+        ordering = ("-date_created_at",)
+        verbose_name = "comment"
+        verbose_name_plural = "comments"
+        constraints = (
+            models.UniqueConstraint(
+                fields=(
+                    "author",
+                    "news",
+                ),
+                name="unique_comment_for_author_to_news",
+            ),
+        )
+
+    def __str__(self):
+        return f"Comment to {self.news}, Author {self.author}."
