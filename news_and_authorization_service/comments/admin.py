@@ -26,4 +26,5 @@ class CommentsAdmin(admin.ModelAdmin):
         "news",
         "author",
         "text",
+        "date_created_at",
     )
