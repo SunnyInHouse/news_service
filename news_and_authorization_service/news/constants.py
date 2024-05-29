@@ -6,5 +6,5 @@ FIELD_LIMITS_NEWS_APP = {
 }
 
 FIELD_REGEXES_NEWS_APP = {
-    "title": r"^[a-zA-Zа-яА-ЯёЁ.!?, \-]+$",
+    "title": r"^[a-zA-Zа-яА-ЯёЁ0-9.!?,_ \-]+$",
 }
