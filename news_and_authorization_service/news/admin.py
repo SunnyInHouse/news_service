@@ -6,20 +6,30 @@ from news.models import News
 
 
 @admin.register(News)
-class CourseAdmin(admin.ModelAdmin):
+class NewsAdmin(admin.ModelAdmin):
     """Settings for presenting 'News' model on the admin site."""
 
     list_display = (
         "id",
         "title",
         "author",
-        "created_at",
+        "date_created_at",
     )
     list_select_related = True
-    search_fields = ("title", "author", "created_at")
-    eadonly_fields = ("created_at",)
+    search_fields = (
+        "title",
+        "author__username",
+        "date_created_at",
+        "date_updated_at",
+    )
+    readonly_fields = (
+        "date_created_at",
+        "date_updated_at",
+    )
     fields = (
         "title",
         "author",
         "text",
+        "date_created_at",
+        "date_updated_at",
     )
