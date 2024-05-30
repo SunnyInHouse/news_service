@@ -25,14 +25,14 @@ class Comment(models.Model):
         verbose_name="news author",
         help_text="Author of the news",
         on_delete=models.CASCADE,
-        related_name="comments_author",
+        related_name="comments",
     )
     news = models.ForeignKey(
         News,
         verbose_name="comment for news",
         help_text="Comment for this news",
         on_delete=models.CASCADE,
-        related_name="comments_news",
+        related_name="comments",
     )
 
     class Meta:
