@@ -34,7 +34,6 @@ class News(models.Model):
         "news text",
         help_text="Text of the news",
         max_length=FIELD_LIMITS_NEWS_APP["text_max_char"],
-        blank=True,
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -54,12 +53,12 @@ class News(models.Model):
 
     def _get_number_of_comments(self):
         """Calculate count of comments to news."""
-        return self.comments_news.count()
+        return self.comments.count()
 
     _get_number_of_comments.short_description = "count of comments to news"
 
     def _get_number_of_likes(self):
         """Calculate count of likes to news."""
-        return self.like_news.count()
+        return self.likes.count()
 
     _get_number_of_likes.short_description = "count of likes to news"

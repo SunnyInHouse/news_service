@@ -20,7 +20,7 @@ class PageNumberPageSizePagination(PageNumberPagination):
         return Response(
             OrderedDict(
                 [
-                    ("count", self.page.paginator.count),
+                    ("count_on_page", self.page.paginator.count),
                     ("total_pages", self.page.paginator.num_pages),
                     ("next_page", self.get_next_link()),
                     ("previous_page", self.get_previous_link()),

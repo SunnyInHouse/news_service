@@ -16,14 +16,14 @@ class Comment(models.Model):
         auto_now_add=True,
     )
     text = models.CharField(
-        "news text",
-        help_text="Text of the news",
+        "comment text",
+        help_text="Text of the comment",
         max_length=FIELD_LIMITS_COMMENTS_APP["text_max_char"],
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        verbose_name="news author",
-        help_text="Author of the news",
+        verbose_name="comment author",
+        help_text="Author of the comment",
         on_delete=models.CASCADE,
         related_name="comments",
     )
