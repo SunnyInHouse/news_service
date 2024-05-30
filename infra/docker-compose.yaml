@@ -1,6 +1,8 @@
 volumes:
   pg_data:
   pg_admin:
+  static_value:
+  media_value:
 
 networks:
   news_and_authorization_service:
@@ -37,3 +39,33 @@ services:
     networks:
       - news_and_authorization_service
     restart: on-failure
+
+  backend:
+    build:
+      context: ../news_and_authorization_service/
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - static_value:/app/static/
+      - media_value:/app/media/
+      - ../data:/app/data
+    networks:
+      - news_and_authorization_service
+    depends_on:
+      - db
+    env_file:
+      - ../news_and_authorization_service/.env
+
+  nginx:
+    image: nginx:1.25.3
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - static_value:/var/html/static/
+      - media_value:/var/html/media/
+    networks:
+      - news_and_authorization_service
+    depends_on:
+      - backend
+
