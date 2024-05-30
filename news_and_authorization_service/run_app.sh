@@ -9,4 +9,4 @@ done;
 python manage.py migrate --no-input;
 python manage.py collectstatic --no-input;
 python manage.py loaddata /app/data/db.json;
-gunicorn development_tracker.wsgi:application --bind 0:8000;
+gunicorn news_and_authorization_service.wsgi:application --bind 0:8000;
