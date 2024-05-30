@@ -51,3 +51,15 @@ class News(models.Model):
 
     def __str__(self):
         return f"News {self.title}, Author {self.author}."
+
+    def _get_number_of_comments(self):
+        """Calculate count of comments to news."""
+        return self.comments_news.count()
+
+    _get_number_of_comments.short_description = "count of comments to news"
+
+    def _get_number_of_likes(self):
+        """Calculate count of likes to news."""
+        return self.like_news.count()
+
+    _get_number_of_likes.short_description = "count of likes to news"

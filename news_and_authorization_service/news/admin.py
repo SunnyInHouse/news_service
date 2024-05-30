@@ -14,6 +14,8 @@ class NewsAdmin(admin.ModelAdmin):
         "title",
         "author",
         "date_created_at",
+        "_get_number_of_comments",
+        "_get_number_of_likes",
     )
     list_select_related = True
     search_fields = (
