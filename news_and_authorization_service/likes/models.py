@@ -23,6 +23,11 @@ class Like(models.Model):
         on_delete=models.CASCADE,
         related_name="like_author",
     )
+    date_created_at = models.DateTimeField(
+        "like date created at",
+        help_text="Date the like was created",
+        auto_now_add=True,
+    )
 
     class Meta:
         verbose_name = "like"
