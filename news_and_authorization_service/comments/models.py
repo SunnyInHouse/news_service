@@ -15,7 +15,7 @@ class Comment(models.Model):
         help_text="Date the comments was created",
         auto_now_add=True,
     )
-    text = models.CharField(
+    text = models.TextField(
         "comment text",
         help_text="Text of the comment",
         max_length=FIELD_LIMITS_COMMENTS_APP["text_max_char"],
