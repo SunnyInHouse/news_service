@@ -43,6 +43,7 @@ class Comment(models.Model):
             models.UniqueConstraint(
                 fields=(
                     "author",
+                    "text",
                     "news",
                 ),
                 name="unique_comment_for_author_to_news",

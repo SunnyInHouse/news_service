@@ -9,7 +9,10 @@ from news.models import News
 class CommentSerializer(serializers.ModelSerializer):
     """Serializer for read comments."""
 
-    author = serializers.SlugRelatedField(slug_field="username", read_only=True)
+    author = serializers.SlugRelatedField(
+        slug_field="username",
+        read_only=True,
+    )
 
     class Meta:
         model = Comment
@@ -25,13 +28,17 @@ class NewsSerializer(serializers.ModelSerializer):
     """Serializer for work with news."""
 
     count_comments = serializers.IntegerField(
-        source="_get_number_of_comments", read_only=True
+        source="_get_number_of_comments",
+        read_only=True,
     )
     count_likes = serializers.IntegerField(
-        source="_get_number_of_likes", read_only=True
+        source="_get_number_of_likes",
+        read_only=True,
     )
     author = serializers.SlugRelatedField(
-        slug_field="username", read_only=True, default=serializers.CurrentUserDefault()
+        slug_field="username",
+        read_only=True,
+        default=serializers.CurrentUserDefault(),
     )
     comments_list = serializers.SerializerMethodField()
 

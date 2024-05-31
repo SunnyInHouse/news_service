@@ -16,7 +16,7 @@ class IsUserOwner(IsAuthenticated):
 class IsUserAdmin(IsAuthenticated):
     """Only authenticated requests from users-admins."""
 
-    message = "Available only for authenticated users admins."
+    message = "Available only for authenticated users-admins."
     code = "OnlyAdmins"
 
     def has_object_permission(self, request, view, obj):
@@ -31,3 +31,13 @@ class IsUserReadOnly(IsAuthenticated):
 
     def has_object_permission(self, request, view, obj):
         return request.method in SAFE_METHODS
+
+
+class IsUserNewsAuthor(IsAuthenticated):
+    """Only authenticated requests from  user-owners of news."""
+
+    message = "Available only for authenticated  user-owners of news."
+    code = "OnlyOwnersOfNews"
+
+    def has_object_permission(self, request, view, obj):
+        return request.user == view._get_news.author

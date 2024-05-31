@@ -1,7 +1,5 @@
 """Views for endpoints 'news' of the 'Api' application v1."""
 
-from rest_framework import permissions
-
 from api.v1.core.pagination import PageNumberPageSizePagination
 from api.v1.core.permissions import IsUserAdmin, IsUserOwner, IsUserReadOnly
 from api.v1.news.serializers import NewsSerializer
