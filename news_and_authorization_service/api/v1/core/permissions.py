@@ -10,7 +10,7 @@ class IsUserOwner(IsAuthenticated):
     code = "OnlyOwnerOfObject"
 
     def has_object_permission(self, request, view, obj):
-        return request.user.is_authenticated and request.user == obj.author
+        return request.user == obj.author
 
 
 class IsUserAdmin(IsAuthenticated):
@@ -20,7 +20,7 @@ class IsUserAdmin(IsAuthenticated):
     code = "OnlyAdmins"
 
     def has_object_permission(self, request, view, obj):
-        return request.user.is_authenticated and request.user.is_admin
+        return request.user.is_admin
 
 
 class IsUserReadOnly(IsAuthenticated):

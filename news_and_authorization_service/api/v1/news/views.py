@@ -1,4 +1,4 @@
-"""Views for 'news' endpoints of the 'Api' application v1."""
+"""Views for endpoints 'news' of the 'Api' application v1."""
 
 from rest_framework import permissions
 
@@ -17,7 +17,7 @@ class NewsViewSet(GetPostPutDeleteViewSet):
 
     queryset = News.objects.select_related("author").prefetch_related("comments")
     serializer_class = NewsSerializer
-    permission_classes = (IsUserReadOnly, IsUserOwner, IsUserAdmin)
+    permission_classes = (IsUserReadOnly | IsUserOwner | IsUserAdmin,)
     pagination_class = PageNumberPageSizePagination
     ordering = ("-date_updated_at",)
 

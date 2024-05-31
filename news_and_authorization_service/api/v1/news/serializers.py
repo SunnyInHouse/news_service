@@ -14,6 +14,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = (
+            "id",
             "text",
             "author",
             "date_created_at",
@@ -35,21 +36,24 @@ class NewsSerializer(serializers.ModelSerializer):
     comments_list = serializers.SerializerMethodField()
 
     def get_comments_list(self, obj):
-        return CommentSerializer(obj.comments.all()[:10], many=True).data
+        return CommentSerializer(
+            obj.comments.select_related("author").all()[:10], many=True
+        ).data
 
     class Meta:
         model = News
         fields = (
+            "id",
             "title",
             "text",
             "author",
-            "date_updated_at",
+            "date_created_at",
             "date_updated_at",
             "count_comments",
             "count_likes",
             "comments_list",
         )
         read_only_fields = (
-            "date_updated_at",
+            "date_created_at",
             "date_updated_at",
         )

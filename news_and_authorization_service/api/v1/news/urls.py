@@ -5,8 +5,10 @@ from rest_framework.routers import DefaultRouter
 
 from api.v1.news.views import NewsViewSet
 
-router_v1 = DefaultRouter()
+router_news_v1 = DefaultRouter()
 
-router_v1.register("", NewsViewSet, basename="news")
+router_news_v1.register("", NewsViewSet, basename="news")
 
-urlpatterns = [path("", include(router_v1.urls))]
+urlpatterns = [
+    path("", include(router_news_v1.urls)),
+]
