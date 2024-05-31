@@ -6,9 +6,13 @@ from api.v1.comments.serializers import CommentSerializer
 from api.v1.core.pagination import PageNumberPageSizePagination
 from api.v1.core.permissions import IsUserAdmin, IsUserNewsAuthor, IsUserReadOnly
 from api.v1.core.viewsets import GetPostDeleteViewSet
+from api.v1.drf_spectacular.custom_decorators import (
+    activate_drf_spectacular_view_decorator,
+)
 from news.models import News
 
 
+@activate_drf_spectacular_view_decorator
 class CommentsViewSet(GetPostDeleteViewSet):
     """URL requests handler to 'comments' to news resource endpoints"""
 
@@ -17,6 +21,7 @@ class CommentsViewSet(GetPostDeleteViewSet):
 
     serializer_class = CommentSerializer
     permission_classes = (IsUserReadOnly | IsUserNewsAuthor | IsUserAdmin,)
+    lookup_field = "id"
     pagination_class = PageNumberPageSizePagination
     ordering = ("-date_created_at",)
 

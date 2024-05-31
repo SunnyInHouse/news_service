@@ -108,9 +108,9 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Development tracker API",
+    "TITLE": "News and Authorization Service",
     "DESCRIPTION": (
-        "Development tracker API. 'debug_information' in error responses "
+        "News and Authorization Service. 'debug_information' in error responses "
         "available if DEBUG=True."
     ),
     "VERSION": "1.0.0",

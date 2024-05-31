@@ -10,6 +10,7 @@ def api_exception_handler(exc, context):
     """Handle of API Exception."""
     handlers = {
         "AuthenticationFailed": _handle_authentication_failed,
+        "InvalidToken": _handle_authentication_failed,
         "PermissionDenied": _handle_permission_denied,
         "ValidationError": _handle_validation_error,
         "Http404": _handle_not_found,
@@ -70,7 +71,7 @@ def _handle_authentication_failed(exc, context, response):
 def _handle_permission_denied(exc, context, response):
     """Handle of Permission Denied Error."""
     response.status_code = status.HTTP_403_FORBIDDEN
-    response.data = exc.get_full_details()["code"]
+    response.data = "PermissionDenied"
     return _handle_generic_error(exc, context, response)
 
 

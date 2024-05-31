@@ -30,10 +30,18 @@ class Response400Serializer(ResponseErrorSerializer):
 
 
 class Response401Serializer(ResponseErrorSerializer):
-    """400 response: Invalid field value."""
+    """401 response: AuthenticationFailed."""
 
     message = serializers.CharField(
         default="AuthenticationFailed",
+    )
+
+
+class Response403Serializer(ResponseErrorSerializer):
+    """403 response: Permission Denied."""
+
+    message = serializers.CharField(
+        default="PermissionDenied",
     )
 
 
