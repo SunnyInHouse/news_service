@@ -30,7 +30,7 @@ class News(models.Model):
         },
         validators=(RegexValidator(FIELD_REGEXES_NEWS_APP["title"]),),
     )
-    text = models.CharField(
+    text = models.TextField(
         "news text",
         help_text="Text of the news",
         max_length=FIELD_LIMITS_NEWS_APP["text_max_char"],
