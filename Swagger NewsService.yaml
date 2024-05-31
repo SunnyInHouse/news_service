@@ -1,0 +1,806 @@
+openapi: 3.0.3
+info:
+  title: News and Authorization Service
+  version: 1.0.0
+  description: News and Authorization Service. 'debug_information' in error responses
+    available if DEBUG=True.
+paths:
+  /api/v1/auth/:
+    post:
+      operationId: v1_auth_create
+      description: Authenticate user and issue JWT-tokens.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthUserSignInSerilizer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthUserSignInSerilizer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthUserSignInSerilizer'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200Tokens'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response400'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+  /api/v1/news/:
+    get:
+      operationId: v1_news_list
+      description: URL requests handler to 'News' resource endpoints
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - news
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLikeList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+    post:
+      operationId: v1_news_create
+      description: URL requests handler to 'News' resource endpoints
+      tags:
+      - news
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/News'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/News'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/News'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response400'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+  /api/v1/news/{news_id}/comments/:
+    get:
+      operationId: v1_news_comments_list
+      description: URL requests handler to 'comments' to news resource endpoints
+      parameters:
+      - in: path
+        name: news_id
+        schema:
+          type: integer
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - comments
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCommentList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+    post:
+      operationId: v1_news_comments_create
+      description: URL requests handler to 'comments' to news resource endpoints
+      parameters:
+      - in: path
+        name: news_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - comments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Comment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response400'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+  /api/v1/news/{news_id}/comments/{id}/:
+    get:
+      operationId: v1_news_comments_retrieve
+      description: URL requests handler to 'comments' to news resource endpoints
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: news_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - comments
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+    delete:
+      operationId: v1_news_comments_destroy
+      description: URL requests handler to 'comments' to news resource endpoints
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: news_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - comments
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response403'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+  /api/v1/news/{news_id}/likes/:
+    get:
+      operationId: v1_news_likes_list
+      description: URL requests handler to 'likess' to news resource endpoints
+      parameters:
+      - in: path
+        name: news_id
+        schema:
+          type: integer
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - likes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLikeList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+    post:
+      operationId: v1_news_likes_create
+      description: URL requests handler to 'likess' to news resource endpoints
+      parameters:
+      - in: path
+        name: news_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - likes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Like'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Like'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Like'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response400'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+  /api/v1/news/{news_id}/likes/{id}/:
+    get:
+      operationId: v1_news_likes_retrieve
+      description: URL requests handler to 'likess' to news resource endpoints
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: news_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - likes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+    delete:
+      operationId: v1_news_likes_destroy
+      description: URL requests handler to 'likess' to news resource endpoints
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: news_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - likes
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response403'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+  /api/v1/news/{id}/:
+    get:
+      operationId: v1_news_retrieve
+      description: URL requests handler to 'News' resource endpoints
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this news.
+        required: true
+      tags:
+      - news
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+    put:
+      operationId: v1_news_update
+      description: URL requests handler to 'News' resource endpoints
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this news.
+        required: true
+      tags:
+      - news
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/News'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/News'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/News'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response403'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+    delete:
+      operationId: v1_news_destroy
+      description: URL requests handler to 'News' resource endpoints
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this news.
+        required: true
+      tags:
+      - news
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response401'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response403'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
+          description: ''
+components:
+  schemas:
+    AuthUserSignInSerilizer:
+      type: object
+      description: Serializer for working with signin requests.
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - password
+      - username
+    Comment:
+      type: object
+      description: Serializer for comments.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+          title: Comment text
+          description: Text of the comment
+          maxLength: 500
+        author:
+          type: string
+          description: User's username
+          readOnly: true
+        news:
+          type: string
+          readOnly: true
+        date_created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Comments date created at
+          description: Date the comments was created
+      required:
+      - author
+      - date_created_at
+      - id
+      - news
+      - text
+    Like:
+      type: object
+      description: Serializer for likes.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        author:
+          type: string
+          description: User's username
+          readOnly: true
+        news:
+          type: string
+          readOnly: true
+        date_created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Like date created at
+          description: Date the like was created
+      required:
+      - author
+      - date_created_at
+      - id
+      - news
+    News:
+      type: object
+      description: Serializer for work with news.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: News title
+          description: News name
+          pattern: ^[a-zA-Z\u0430-\u044f\u0410-\u042f\u0451\u04010-9.!?,_() \-]+$
+          maxLength: 150
+        text:
+          type: string
+          title: News text
+          description: Text of the news
+          maxLength: 1500
+        author:
+          type: string
+          description: User's username
+          readOnly: true
+        date_created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: News date created at
+          description: Date the news was created
+        date_updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: News date updated at
+          description: Date the news was updated
+        count_comments:
+          type: integer
+          readOnly: true
+        count_likes:
+          type: integer
+          readOnly: true
+        comments_list:
+          type: string
+          readOnly: true
+      required:
+      - author
+      - comments_list
+      - count_comments
+      - count_likes
+      - date_created_at
+      - date_updated_at
+      - id
+      - text
+      - title
+    PaginatedCommentList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        total_pages:
+          type: integer
+          example: 12
+        next_page:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous_page:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+    PaginatedLikeList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        total_pages:
+          type: integer
+          example: 12
+        next_page:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous_page:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Like'
+    Response200Tokens:
+      type: object
+      description: '200 response: Tokens.'
+      properties:
+        access:
+          type: string
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+    Response400:
+      type: object
+      description: '400 response: Invalid field value.'
+      properties:
+        message:
+          type: string
+          default: FieldValidationError
+        debug_information:
+          type: string
+          default: api_error
+    Response401:
+      type: object
+      description: '401 response: AuthenticationFailed.'
+      properties:
+        message:
+          type: string
+          default: AuthenticationFailed
+        debug_information:
+          type: string
+          default: api_error
+    Response403:
+      type: object
+      description: '403 response: Permission Denied.'
+      properties:
+        message:
+          type: string
+          default: PermissionDenied
+        debug_information:
+          type: string
+          default: api_error
+    Response404:
+      type: object
+      description: '404 response: Not found.'
+      properties:
+        message:
+          type: string
+          default: DataNotFound
+        debug_information:
+          type: string
+          default: api_error
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

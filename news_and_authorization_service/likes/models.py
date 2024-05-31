@@ -14,14 +14,14 @@ class Like(models.Model):
         verbose_name="news to like",
         help_text="News to like",
         on_delete=models.CASCADE,
-        related_name="like_news",
+        related_name="likes",
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name="like author",
         help_text="Author of the like",
         on_delete=models.CASCADE,
-        related_name="like_author",
+        related_name="likes",
     )
     date_created_at = models.DateTimeField(
         "like date created at",
