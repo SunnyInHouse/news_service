@@ -2,7 +2,25 @@
 
 from django.contrib import admin
 
+from comments.models import Comment
+from likes.models import Like
 from news.models import News
+
+
+class CommentsInLine(admin.TabularInline):
+    """Settings for presenting 'Comment' model in 'News' model on the admin site."""
+
+    model = Comment
+    extra = 1
+    max_num = 5
+
+
+class LikestInLine(admin.TabularInline):
+    """Settings for presenting 'Like' model in 'News' model on the admin site."""
+
+    model = Like
+    extra = 1
+    max_num = 5
 
 
 @admin.register(News)
@@ -34,4 +52,6 @@ class NewsAdmin(admin.ModelAdmin):
         "text",
         "date_created_at",
         "date_updated_at",
+        # "comments",
     )
+    inlines = (CommentsInLine, LikestInLine)
