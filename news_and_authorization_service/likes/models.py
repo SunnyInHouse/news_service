@@ -41,3 +41,6 @@ class Like(models.Model):
                 name="unique_like_for_author_to_news",
             ),
         )
+
+    def __str__(self):
+        return f"Like to {self.news}, Author {self.author}."
