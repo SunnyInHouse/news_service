@@ -10,26 +10,27 @@
 ### Документация API
 
 Документация API в формате Swagger сохранена в файле Swagger News and Authorization Service.yaml
-в корневой папке проекта
+в корневой папке проекта.
 
 ### Технологии
 
-Python 3.11
-Django 5.0.6
-Django REST Framework 3.15.1
-DRF-Spectacular 0.27.2
-PostgreSQL 16.3
-SimpleJWT 5.3.1
-dotenv 1.0.1
-gunicorn 22.0
-nginx 1.25.3
-docker
+- Python 3.11
+- Django 5.0.6
+- Django REST Framework 3.15.1
+- DRF-Spectacular 0.27.2
+- PostgreSQL 16.3
+- SimpleJWT 5.3.1
+- dotenv 1.0.1
+- gunicorn 22.0
+- nginx 1.25.3
+- docker
 
 ## Просмотр проекта
 
 Проект развернут на удаленном сервере. 
-Админ-сайт проекта доступен по адресу http://158.160.143.206/admin/
-API проекта доступна по адресу http://158.160.143.206/api/v1/
+ - Админ-сайт проекта доступен по адресу http://158.160.143.206/admin/
+ - API проекта доступна по адресу http://158.160.143.206/api/v1/
+
 В развернутом на сервере проекте доступны пользователи:
 1. администратор (username - admin, password - admin)
 2. обычный пользователь (username - Sandy, password - User128590)
@@ -94,10 +95,7 @@ http://localhost/api/doc/v1/download/
     "password": "admin"
 }
 ```
-
-## Примеры запросов
-
-
+ 
 ## Команда проекта
 
 [SunnyInHouse](https://github.com/SunnyInHouse)
