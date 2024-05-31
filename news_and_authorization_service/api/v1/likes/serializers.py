@@ -1,12 +1,12 @@
-"""Serializers for the endpoints 'comments' to news of the 'Api' application v1."""
+"""Serializers for the endpoints 'likes' to news of the 'Api' application v1."""
 
 from rest_framework import serializers
 
-from comments.models import Comment
+from likes.models import Like
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    """Serializer for comments."""
+class LikeSerializer(serializers.ModelSerializer):
+    """Serializer for likes."""
 
     author = serializers.SlugRelatedField(
         slug_field="username",
@@ -16,26 +16,23 @@ class CommentSerializer(serializers.ModelSerializer):
     news = serializers.StringRelatedField(read_only=True)
 
     default_error_messages = {
-        "comment_is_exists": "You already comment this news with this text.",
+        "like_is_exists": "You already liked this news.",
     }
 
     class Meta:
-        model = Comment
+        model = Like
         fields = (
             "id",
-            "text",
             "author",
             "news",
             "date_created_at",
         )
 
     def validate(self, attrs):
-        if Comment.objects.filter(
-            author=self.context.get("request").user,
-            news=self.context.get("news"),
-            text=attrs["text"],
+        if Like.objects.filter(
+            author=self.context.get("request").user, news=self.context.get("news")
         ).exists():
             raise serializers.ValidationError(
-                {"detail": self.error_messages["comment_is_exists"]}
+                {"detail": self.error_messages["like_is_exists"]}
             )
         return super().validate(attrs)

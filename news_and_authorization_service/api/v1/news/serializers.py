@@ -60,7 +60,3 @@ class NewsSerializer(serializers.ModelSerializer):
             "count_likes",
             "comments_list",
         )
-        read_only_fields = (
-            "date_created_at",
-            "date_updated_at",
-        )

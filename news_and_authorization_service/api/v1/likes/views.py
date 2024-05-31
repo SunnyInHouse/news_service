@@ -1,21 +1,21 @@
-"""Views for the endpoints 'comments' to news of the 'Api' application v1."""
+"""Views for the endpoints 'likes' to news of the 'Api' application v1."""
 
 from django.shortcuts import get_object_or_404
 
-from api.v1.comments.serializers import CommentSerializer
+from api.v1.likes.serializers import LikeSerializer
 from api.v1.core.pagination import PageNumberPageSizePagination
 from api.v1.core.permissions import IsUserAdmin, IsUserNewsAuthor, IsUserReadOnly
 from api.v1.core.viewsets import GetPostDeleteViewSet
 from news.models import News
 
 
-class CommentsViewSet(GetPostDeleteViewSet):
-    """URL requests handler to 'comments' to news resource endpoints"""
+class LikesViewSet(GetPostDeleteViewSet):
+    """URL requests handler to 'likess' to news resource endpoints"""
 
-    name = "Comment to news resourse"
-    description = "API endpoints to manage comments to news."
+    name = "Like to news resourse"
+    description = "API endpoints to manage likes to news."
 
-    serializer_class = CommentSerializer
+    serializer_class = LikeSerializer
     permission_classes = (IsUserReadOnly | IsUserNewsAuthor | IsUserAdmin,)
     pagination_class = PageNumberPageSizePagination
     ordering = ("-date_created_at",)
@@ -25,7 +25,7 @@ class CommentsViewSet(GetPostDeleteViewSet):
         return get_object_or_404(News, id=self.kwargs.get("news_id"))
 
     def get_queryset(self):
-        return self._get_news.comments.select_related("author", "news").all()
+        return self._get_news.likes.select_related("author", "news").all()
 
     def get_serializer_context(self):
         serializer_context = super().get_serializer_context()
