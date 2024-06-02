@@ -40,4 +40,4 @@ class IsUserNewsAuthor(IsAuthenticated):
     code = "OnlyOwnersOfNews"
 
     def has_object_permission(self, request, view, obj):
-        return request.user == view._get_news.author
+        return request.user == view.get_news.author

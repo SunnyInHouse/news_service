@@ -14,7 +14,7 @@ from news.models import News
 
 @activate_drf_spectacular_view_decorator
 class CommentsViewSet(GetPostDeleteViewSet):
-    """URL requests handler to 'comments' to news resource endpoints"""
+    """URL requests handler to 'comments' to news resource endpoints."""
 
     name = "Comment to news resourse"
     description = "API endpoints to manage comments to news."
@@ -26,17 +26,17 @@ class CommentsViewSet(GetPostDeleteViewSet):
     ordering = ("-date_created_at",)
 
     @property
-    def _get_news(self):
+    def get_news(self):
         return get_object_or_404(News, id=self.kwargs.get("news_id"))
 
     def get_queryset(self):
-        return self._get_news.comments.select_related("author", "news").all()
+        return self.get_news.comments.select_related("author", "news").all()
 
     def get_serializer_context(self):
         serializer_context = super().get_serializer_context()
         if self.request.method == "POST":
-            serializer_context.update(news=self._get_news)
+            serializer_context.update(news=self.get_news)
         return serializer_context
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, news=self._get_news)
+        serializer.save(author=self.request.user, news=self.get_news)

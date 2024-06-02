@@ -40,9 +40,9 @@ class NewsSerializer(serializers.ModelSerializer):
         read_only=True,
         default=serializers.CurrentUserDefault(),
     )
-    comments_list = serializers.SerializerMethodField()
+    comments = serializers.SerializerMethodField()
 
-    def get_comments_list(self, obj):
+    def get_comments(self, obj):
         return CommentSerializer(
             obj.comments.select_related("author").all()[:10], many=True
         ).data
@@ -58,5 +58,5 @@ class NewsSerializer(serializers.ModelSerializer):
             "date_updated_at",
             "count_comments",
             "count_likes",
-            "comments_list",
+            "comments",
         )

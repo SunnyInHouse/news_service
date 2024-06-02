@@ -17,5 +17,3 @@ class GetPostDeleteViewSet(
     viewsets.GenericViewSet,
 ):
     """The viewset allows methods: GET, POST, PUT, DELETE."""
-
-    pass
