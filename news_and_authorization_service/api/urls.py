@@ -1,8 +1,8 @@
 """URLs configuration of the 'Api' application."""
 
 from django.urls import include, path
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 app_name = "api"
 
