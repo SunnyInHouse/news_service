@@ -5,7 +5,6 @@ from rest_framework import status
 
 from api.v1.auth.serializers import AuthUserSignInSerilizer
 from api.v1.comments.serializers import CommentSerializer
-from api.v1.likes.serializers import LikeSerializer
 from api.v1.drf_spectacular.serializers import (
     Response200TokensSerializer,
     Response400Serializer,
@@ -13,7 +12,7 @@ from api.v1.drf_spectacular.serializers import (
     Response403Serializer,
     Response404Serializer,
 )
-
+from api.v1.likes.serializers import LikeSerializer
 
 VIEWS_DECORATORS = {
     "signin": extend_schema(

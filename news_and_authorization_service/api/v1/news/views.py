@@ -2,17 +2,17 @@
 
 from api.v1.core.pagination import PageNumberPageSizePagination
 from api.v1.core.permissions import IsUserAdmin, IsUserOwner, IsUserReadOnly
-from api.v1.news.serializers import NewsSerializer
 from api.v1.core.viewsets import GetPostPutDeleteViewSet
 from api.v1.drf_spectacular.custom_decorators import (
     activate_drf_spectacular_view_decorator,
 )
+from api.v1.news.serializers import NewsSerializer
 from news.models import News
 
 
 @activate_drf_spectacular_view_decorator
 class NewsViewSet(GetPostPutDeleteViewSet):
-    """URL requests handler to 'News' resource endpoints"""
+    """URL requests handler to 'News' resource endpoints."""
 
     name = "News resourse"
     description = "API endpoints to manage news."
