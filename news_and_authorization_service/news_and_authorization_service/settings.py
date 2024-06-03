@@ -23,7 +23,7 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost, 127.0.0.1").split(", ")
 INTERNAL_IPS = ["127.0.0.1"]
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
+    "news_and_authorization_service.apps.NewsAndAuthorizationServiceAdminConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
